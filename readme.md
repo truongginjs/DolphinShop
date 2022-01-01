@@ -1,2 +1,0 @@
-# DolphinShop
-Dolphin Shop
