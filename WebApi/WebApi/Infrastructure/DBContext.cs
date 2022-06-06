@@ -6,7 +6,7 @@ using WebApi.Models;
 
 namespace WebApi.Infrastructure
 {
-    public class DBContext : DbContext//, IPersistedGrantDbContext
+    public class DBContext : DbContext
     {
         public DBContext(DbContextOptions<DBContext> options)
                     : base(options)
@@ -21,18 +21,12 @@ namespace WebApi.Infrastructure
         public virtual DbSet<Media> Media { get; set; }
         public virtual DbSet<Voter> Voter { get; set; }
         public virtual DbSet<Sharer> Sharer { get; set; }
-        public DbSet<PersistedGrant> PersistedGrants { get ; set; }
-        public DbSet<DeviceFlowCodes> DeviceFlowCodes { get ; set; }
-
-        public Task<int> SaveChangesAsync()
-        {
-            throw new System.NotImplementedException();
-        }
 
         // public virtual DbSet<RefreshTokenTable> RefreshToken { get; internal set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             modelBuilder.Entity<Voter>(voter =>
             {
                 voter.HasKey(x => x.PostId);
@@ -40,11 +34,11 @@ namespace WebApi.Infrastructure
 
             });
             modelBuilder.Entity<Sharer>(sharer =>
-        {
-            sharer.HasKey(x => x.PostId);
-            sharer.HasKey(x => x.UserId);
+            {
+                sharer.HasKey(x => x.PostId);
+                sharer.HasKey(x => x.UserId);
 
-        });
+            });
             PreDatabase.SeedData(modelBuilder);
         }
     }
