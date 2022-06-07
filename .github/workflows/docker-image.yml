@@ -16,8 +16,11 @@ jobs:
     - name: Checkout main
       uses: actions/checkout@main
 
-    - name: Build container image latest version
-      run: docker build -t registry.digitalocean.com/acme/app:latest .
+    - name: Build container image be latest version
+      run: docker build -t registry.digitalocean.com/bedolphinshop:latest -f ./WebApi/WebApi/Dockerfile .
+
+    - name: Build container image fe latest version
+      run: docker build -t registry.digitalocean.com/febedolphinshop:latest -f ./fe-dolphinshop/Dockerfile .
 
     - name: Install doctl
       uses: digitalocean/action-doctl@v2
@@ -27,8 +30,11 @@ jobs:
     - name: Log in to DigitalOcean Container Registry with short-lived credentials
       run: doctl registry login --expiry-seconds 600
 
-    - name: Push image to DigitalOcean Container Registry
-      run: docker push registry.digitalocean.com/acme/app:latest
+    - name: Push be image to DigitalOcean Container Registry
+      run: docker push registry.digitalocean.com/bebedolphinshop:latest
+
+    - name: Push fe image to DigitalOcean Container Registry
+      run: docker push registry.digitalocean.com/febedolphinshop:latest
 
   deploy:
     runs-on: ubuntu-latest
@@ -43,7 +49,6 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: 22
           script: |
-            cd acme.app
             docker-compose stop
             docker-compose rm -f
             docker-compose pull

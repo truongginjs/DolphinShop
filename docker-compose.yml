@@ -2,20 +2,14 @@ version: '3.4'
 
 services:
   fedolphinshop:
-    image: fedolphinshop
-    build:
-      context: fe-dolphinshop
-      dockerfile: ./Dockerfile
+    image: registry.digitalocean.com/fedolphinshop:latest
     environment:
       NODE_ENV: production
     ports:
       - 3000:80
 
-  webapi:
-    image: webapi
-    build:
-      context: .
-      dockerfile: WebApi/WebApi/Dockerfile
+  bedolphinshop:
+    image: registry.digitalocean.com/bedolphinshop:latest
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
     ports:
