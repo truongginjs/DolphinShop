@@ -6,7 +6,7 @@ WORKDIR /app
 
 COPY . /app/
 
-# RUN npm install -g npm@8.12.0
+RUN npm install -g npm@8.12.0
 RUN npm install -g eslint
 RUN npm install --force --silent
 RUN npm install react-scripts -g --silent
