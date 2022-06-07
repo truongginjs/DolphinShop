@@ -8,7 +8,7 @@ COPY . /app/
 
 RUN npm install --location=global npm@8.12.1
 RUN npm install --location=global eslint
-RUN npm install --force --silent
+RUN npm install --force 
 RUN npm install react-scripts --location=global --silent
 
 RUN npm run build
