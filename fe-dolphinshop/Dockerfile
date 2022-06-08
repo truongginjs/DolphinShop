@@ -2,6 +2,8 @@
 FROM node:alpine as build
 
 ENV NODE_ENV=production
+ENV SKIP_PREFLIGHT_CHECK=true
+ENV ESLINT_NO_DEV_ERRORS=true
 
 WORKDIR /app
 
