@@ -5,7 +5,7 @@ ENV NODE_ENV=production
 
 WORKDIR /app
 
-COPY . /app/
+COPY ./fe-dolphinshop /app/
 
 # WORKDIR /usr/src/app
 # COPY ["package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
