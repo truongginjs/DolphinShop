@@ -1,10 +1,14 @@
 # pull official base image
 FROM node:alpine as build
+
 ENV NODE_ENV=production
 
-WORKDIR /app
+# WORKDIR /app
 
-COPY . /app/
+# COPY . /app/
+
+WORKDIR /usr/src/app
+COPY ["package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
 
 RUN npm install --location=global npm@8.12.1
 RUN npm install --location=global eslint

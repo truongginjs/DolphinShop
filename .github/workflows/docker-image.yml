@@ -15,12 +15,12 @@ jobs:
 
     - name: Checkout main
       uses: actions/checkout@main
-
-    - name: Build container image be latest version
-      run: docker build -t registry.digitalocean.com/bedolphinshop:latest -f ./WebApi/WebApi/Dockerfile .
-
+    
     - name: Build container image fe latest version
       run: docker build -t registry.digitalocean.com/febedolphinshop:latest -f ./fe-dolphinshop/Dockerfile .
+    
+    - name: Build container image be latest version
+      run: docker build -t registry.digitalocean.com/bedolphinshop:latest -f ./WebApi/WebApi/Dockerfile .
 
     - name: Install doctl
       uses: digitalocean/action-doctl@v2
