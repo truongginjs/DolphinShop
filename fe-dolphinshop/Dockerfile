@@ -7,9 +7,14 @@ ENV ESLINT_NO_DEV_ERRORS=true
 
 WORKDIR /app
 
-COPY ./fe-dolphinshop /app/
-# WORKDIR /usr/src/app
-COPY ["./package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
+COPY ./fe-dolphinshop/package.json /app/package.json
+COPY ./fe-dolphinshop/package-lock.json /app/package.json
+# COPY package-lock.json /app/package-lock.json
+
+# Same as npm install
+RUN npm install --force
+
+COPY ./fe-dolphinshop /app
 
 ENV CI=true
 ENV PORT=3000
