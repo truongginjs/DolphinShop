@@ -12,7 +12,7 @@ COPY ./fe-dolphinshop/package-lock.json /app/package.json
 # COPY package-lock.json /app/package-lock.json
 
 # Same as npm install
-RUN npm install --force
+RUN npm install
 
 COPY ./fe-dolphinshop /app
 
