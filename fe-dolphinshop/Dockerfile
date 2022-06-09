@@ -1,27 +1,36 @@
 # pull official base image
-FROM node:alpine as build
+FROM node:alpine as development
 
 ENV NODE_ENV=production
+ENV SKIP_PREFLIGHT_CHECK=true
+ENV ESLINT_NO_DEV_ERRORS=true
 
 WORKDIR /app
 
 COPY ./fe-dolphinshop /app/
-
 # WORKDIR /usr/src/app
-# COPY ["package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
-RUN ls
-RUN npm install --location=global npm@8.12.1
-RUN npm install --location=global eslint
-RUN npm install --force 
-RUN npm install react-scripts --location=global --silent
+COPY ["./package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
+
+ENV CI=true
+ENV PORT=3000
+
+CMD [ "npm", "start" ]
+
+FROM development AS build
 
 RUN npm run build
 
 FROM nginx:alpine
-COPY --from=build /app/build /usr/share/nginx/html
+# Copy config nginx
+COPY --from=build /app/.nginx/nginx.conf /etc/nginx/conf.d/default.conf
 
-# RUN rm /etc/nginx/conf.d/default.conf 
-# COPY nginx/nginx.conf /etc/nginx/conf.d
+WORKDIR /usr/share/nginx/html
 
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+# Remove default nginx static assets
+RUN rm -rf ./*
+
+# Copy static assets from builder stage
+COPY --from=build /app/build .
+
+# Containers run nginx with global directives and daemon off
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
